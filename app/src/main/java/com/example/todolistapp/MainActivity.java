@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -60,5 +61,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addItem(View v) {
+        EditText input = findViewById(R.id.editTextText);
+        String itemText = input.getText().toString();
+
+        if (!(itemText.equals(""))){
+            // Adding an item in itemsAdapter
+            Toast.makeText(getApplicationContext(), "Added Todo", Toast.LENGTH_LONG ).show();
+            itemsAdapter.add(itemText);
+            // Set the input to an empty string after an item has been added
+            input.setText("");
+        }else{
+            Toast.makeText(getApplicationContext(), "Todo cannot be empty!", Toast.LENGTH_LONG ).show();
+        }
     }
 }
