@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,11 +15,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<String> items;
-    private ArrayAdapter<String> itemsAdapter;
+    private ArrayList<TodoItem> items;
+    private TodoAdapter itemsAdapter;
     private ListView listView;
     private Button button;
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         items = new ArrayList<>();
-        itemsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, items);
+        itemsAdapter = new TodoAdapter(this, items);
         listView.setAdapter(itemsAdapter);
 
         deleteListViewListener();
@@ -93,14 +93,15 @@ public class MainActivity extends AppCompatActivity {
         EditText input = findViewById(R.id.editTextText);
         String itemText = input.getText().toString();
 
-        if (!(itemText.equals(""))){
+        if (!itemText.isEmpty()) {
             // Adding an item in itemsAdapter
-            Toast.makeText(getApplicationContext(), "Added Todo", Toast.LENGTH_LONG ).show();
-            itemsAdapter.add(itemText);
+            Toast.makeText(getApplicationContext(), "Added Todo", Toast.LENGTH_LONG).show();
+            TodoItem newItem = new TodoItem(itemText, false);
+            itemsAdapter.add(newItem);
             // Set the input to an empty string after an item has been added
             input.setText("");
-        }else{
-            Toast.makeText(getApplicationContext(), "Todo cannot be empty!", Toast.LENGTH_LONG ).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "Todo cannot be empty!", Toast.LENGTH_LONG).show();
         }
     }
 }
